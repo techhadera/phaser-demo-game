@@ -7,6 +7,7 @@
 		"noEmit": true,
 		"allowJs": true,
 		"jsx": "preserve",
+		"noEmitOnError": false,
 		"importHelpers": true,
 		"moduleResolution": "node",
 		"experimentalDecorators": true,
