@@ -7,6 +7,7 @@ export default class Scene1 extends Phaser.Scene {
   private stars?: Phaser.Physics.Arcade.Group;
   private bombs?: Phaser.Physics.Arcade.Group;
   private scoreText?: Phaser.GameObjects.Text;
+  private gameOverText?: Phaser.GameObjects.Text;
   private score = 0;
   private gameOver = false;
 
@@ -60,7 +61,7 @@ export default class Scene1 extends Phaser.Scene {
 
     this.cursors = this.input.keyboard.createCursorKeys();
 
-    this.stars = this.physics.add.group({ key: 'star', repeat: 11, setXY: { x: 12, y: 0, stepX: 70 } });
+    this.stars = this.physics.add.group({ key: 'star', repeat: 3, setXY: { x: 12, y: 0, stepX: 70 } });
     this.stars?.children.iterate(star => {
       const s = star as Phaser.Physics.Arcade.Image;
       s.setBounceY(Phaser.Math.FloatBetween(0.1, 0.2));
@@ -94,6 +95,11 @@ export default class Scene1 extends Phaser.Scene {
     }
     if (this.cursors?.up?.isDown && this.player?.body.touching.down) {
       this.player?.setVelocityY(-330);
+    }
+
+    if (this.gameOver) {
+      this.gameOverText = this.add.text(200, 250, 'Game over\nPress F to pay respect', 
+                                        { fontSize: '40px', color: '#f00', align: 'center', fontFamily: 'Roboto' });
     }
   }
 
