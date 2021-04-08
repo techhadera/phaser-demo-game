@@ -5,6 +5,8 @@ export default class Scene1 extends Phaser.Scene {
   private player?: Phaser.Physics.Arcade.Sprite;
   private cursors?: Phaser.Types.Input.Keyboard.CursorKeys;
   private stars?: Phaser.Physics.Arcade.Group;
+  private scoreText?: Phaser.GameObjects.Text;
+  private score = 0;
 
   constructor() {
     super('Scene1');
@@ -65,6 +67,8 @@ export default class Scene1 extends Phaser.Scene {
     this.physics.add.collider(this.stars, this.platforms);
 
     this.physics.add.overlap(this.player, this.stars, this.collectStar, undefined, this);
+
+    this.scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', color: '#000' });
   }
 
   update() {
@@ -88,5 +92,8 @@ export default class Scene1 extends Phaser.Scene {
   collectStar(player: Phaser.GameObjects.GameObject, star: Phaser.GameObjects.GameObject) {
     const s = star as Phaser.Physics.Arcade.Image;
     s.disableBody(true, true);
+
+    this.score += 10;
+    this.scoreText?.setText('Score: ' + this.score);
   }
 }
